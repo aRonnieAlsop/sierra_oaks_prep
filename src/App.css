@@ -1,184 +1,738 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+/* =========================================================
+   SIERRA OAKS PREPARATORY
+   Editorial School Website · 1978 Home Film
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Italiana&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #302F29;
+  background: #F5F3EB;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  --ivory: #F5F3EB;
+  --ink: #302F29;
+  --muted: #81796B;
+  --line: #D9D4C7;
+  --olive: #73745A;
+  --film-brown: #4B382E;
+
+  --serif: 'Italiana', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+
+  --page-padding: clamp(18px, 3vw, 56px);
+  --section-space: clamp(72px, 10vw, 160px);
+  --film-radius: 11px;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--ivory);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+::selection {
+  background: #D7C5A7;
+  color: var(--ink);
+}
+
+/* =========================================================
+   PAGE SHELL
+   ========================================================= */
+
+.app,
+.site {
+  width: 100%;
+  min-height: 100vh;
+  overflow: clip;
+}
+
+.site-header {
+  padding: 27px var(--page-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-wordmark {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.55vw, 23px);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.eyebrow,
+.section-label,
+.scene-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  line-height: 1.7;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================
+   CINEMATIC LANDING / SPLIT SCREEN
+   ========================================================= */
 
 .hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+  padding: 0 var(--page-padding);
 }
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
+.hero-stage {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   gap: 8px;
-  margin: 32px 0 0;
+  height: clamp(390px, 56vw, 750px);
+  overflow: hidden;
+  border-radius: var(--film-radius);
+  background: #332B24;
+}
 
-  .logo {
-    height: 18px;
+.hero-panel {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-panel--main {
+  grid-column: 1;
+}
+
+.hero-panel--preview {
+  grid-column: 2;
+}
+
+.hero-panel img,
+.hero-panel video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Scenes slide horizontally when JSX changes state. */
+
+.hero-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 1.15s cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
+}
+
+.hero-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   UNIFIED 1978 FILM TREATMENT
+   Applies to both photographs and videos.
+   ========================================================= */
+
+.film-frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #41372D;
+}
+
+.film-frame img,
+.film-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+
+  filter:
+    sepia(0.17)
+    saturate(0.78)
+    contrast(0.91)
+    brightness(1.04);
+}
+
+/* Warm analog color cast */
+
+.film-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(191, 139, 79, 0.10),
+      transparent 45%,
+      rgba(61, 53, 35, 0.07)
+    );
+
+  mix-blend-mode: screen;
+}
+
+/* Soft optical vignette */
+
+.film-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 52%,
+      rgba(32, 23, 18, 0.19) 100%
+    );
+}
+
+/* Optional moving grain layer */
+
+.film-grain {
+  position: absolute;
+  inset: -35%;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.09;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+  animation: grain-shift 0.55s steps(3) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2%, 1%); }
+  50%  { transform: translate(2%, -1%); }
+  75%  { transform: translate(-1%, 2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* =========================================================
+   HERO TEXT BELOW THE FILM
+   ========================================================= */
+
+.hero-caption {
+  position: relative;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: clamp(44px, 6vw, 90px) 20px 45px;
+  text-align: center;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6.3vw, 104px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 14px 0 12px;
+}
+
+.hero-description {
+  font-family: var(--serif);
+  font-size: clamp(19px, 2vw, 29px);
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Fade-in text on scene changes */
+
+.scene-copy {
+  animation: scene-reveal 0.9s ease both;
+}
+
+@keyframes scene-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(13px);
   }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+/* Film sequence progress */
+
+.scene-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 42px;
 }
 
-.ticks {
+.scene-progress-item {
+  width: 46px;
+  height: 2px;
+  border: 0;
+  padding: 0;
+  background: var(--line);
+  transition: background 0.4s ease;
+}
+
+.scene-progress-item.is-active {
+  background: var(--film-brown);
+}
+
+/* =========================================================
+   EDITORIAL CONTENT SECTIONS
+   ========================================================= */
+
+.section {
+  width: 100%;
+  padding: var(--section-space) var(--page-padding);
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section--narrow .section-inner {
+  max-width: 830px;
+}
+
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(43px, 5.4vw, 83px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 18px 0 28px;
+}
+
+.section-text {
+  font-size: clamp(15px, 1.15vw, 18px);
+  font-weight: 300;
+  line-height: 1.95;
+  color: #55534A;
+  max-width: 760px;
+}
+
+.section-text p {
+  margin: 0 0 23px;
+}
+
+.editorial-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+
+/* =========================================================
+   EDUCATIONAL PILLARS
+   ========================================================= */
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(35px, 5vw, 90px);
+  margin-top: 65px;
+}
+
+.pillar {
+  border-top: 1px solid var(--line);
+  padding-top: 25px;
+}
+
+.pillar-number {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.16em;
+}
+
+.pillar-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 46px);
+  font-weight: 400;
+  margin: 18px 0;
+}
+
+.pillar-description {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #605D54;
+}
+
+/* =========================================================
+   MIXED MEDIA PHOTO + VIDEO GALLERY
+   ========================================================= */
+
+.gallery-section {
+  padding: 100px 0 110px;
+}
+
+.gallery-heading {
+  padding: 0 var(--page-padding);
+  margin: 0 auto 40px;
+  max-width: 1300px;
+}
+
+.gallery-viewport {
   position: relative;
   width: 100%;
+  overflow: hidden;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+.gallery-track {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  padding: 0 var(--page-padding);
+  overscroll-behavior-x: contain;
+}
+
+.gallery-track::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-item {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(300px, 38vw, 530px);
+  width: auto;
+  aspect-ratio: var(--media-ratio, 4 / 5);
+  overflow: hidden;
+  border-radius: 7px;
+  background: #DDD3C2;
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.gallery-caption {
+  padding: 13px 2px 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+}
+
+/* Video indicators */
+
+.video-indicator {
+  position: absolute;
+  z-index: 6;
+  left: 17px;
+  bottom: 17px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #FFF9F0;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+}
+
+/* Subtle hover scroll zones.
+   JSX will implement the scrolling behavior. */
+
+.gallery-edge {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  width: min(12%, 130px);
+}
+
+.gallery-edge--left {
+  left: 0;
+  cursor: w-resize;
+}
+
+.gallery-edge--right {
+  right: 0;
+  cursor: e-resize;
+}
+
+/* =========================================================
+   A WEBSITE IN WAITING
+   ========================================================= */
+
+.waiting-section {
+  padding: 120px var(--page-padding);
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+
+.waiting-inner {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.waiting-title {
+  font-family: var(--serif);
+  font-size: clamp(44px, 5vw, 76px);
+  font-weight: 400;
+  margin: 20px 0 30px;
+}
+
+.waiting-text {
+  font-size: 16px;
+  line-height: 2;
+  color: #605D54;
+}
+
+.waiting-closing {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-style: italic;
+  margin-top: 35px;
+  color: var(--film-brown);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+  padding: 30px var(--page-padding) 45px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+.footer-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .hero-stage {
+    height: 55vw;
+    min-height: 380px;
+    grid-template-columns: 70% 30%;
+    gap: 5px;
   }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+  .pillars {
+    gap: 35px;
   }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+
+  .section {
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+
+  .gallery-item {
+    height: 400px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  :root {
+    --page-padding: 15px;
+    --section-space: 75px;
+    --film-radius: 7px;
+  }
+
+  .site-header {
+    padding: 22px 15px;
+  }
+
+  .site-wordmark {
+    font-size: 15px;
+    letter-spacing: 0.15em;
+  }
+
+  /* One cinematic frame on mobile */
+
+  .hero-stage {
+    display: block;
+    width: 100%;
+    height: 58vh;
+    min-height: 390px;
+    max-height: 640px;
+  }
+
+  .hero-panel--main {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-panel--preview {
+    display: none;
+  }
+
+  .hero-caption {
+    padding: 42px 7px 35px;
+  }
+
+  .hero-title {
+    font-size: clamp(44px, 11vw, 66px);
+    line-height: 1.08;
+  }
+
+  .hero-description {
+    font-size: 20px;
+  }
+
+  .scene-progress {
+    margin-top: 30px;
+    gap: 6px;
+  }
+
+  .scene-progress-item {
+    width: 29px;
+  }
+
+  .section-heading {
+    font-size: 46px;
+  }
+
+  .section-text {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  .pillars {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 42px;
+  }
+
+  .pillar-title {
+    font-size: 34px;
+  }
+
+  .gallery-section {
+    padding: 75px 0;
+  }
+
+  .gallery-heading {
+    margin-bottom: 30px;
+  }
+
+  .gallery-track {
+    gap: 9px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gallery-item {
+    height: 340px;
+    max-width: 85vw;
+    scroll-snap-align: center;
+  }
+
+  /* Native swiping replaces desktop hover zones */
+
+  .gallery-edge {
+    display: none;
+  }
+
+  .waiting-section {
+    padding: 85px 20px;
+  }
+
+  .waiting-title {
+    font-size: 48px;
+  }
+
+  .waiting-text {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .film-grain {
+    animation: none;
+  }
+
+  .hero-track,
+  .scene-copy,
+  .scene-progress-item {
+    animation: none;
+    transition: none;
+  }
+
+  .gallery-track {
+    scroll-behavior: auto;
   }
 }
