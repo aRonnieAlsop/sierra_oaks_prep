@@ -4,10 +4,8 @@ import "./App.css";
 
 // =====================================================
 // SIERRA OAKS PREPARATORY
-// Media imports — from src/assets
+// MEDIA IMPORTS
 // =====================================================
-
-import hero from "./assets/hero.png";
 
 import photo1 from "./assets/sierraOaks1.jpg";
 import photo3 from "./assets/sierraOaks3.JPEG";
@@ -25,22 +23,71 @@ import movie11 from "./assets/sierraOaksMovie11.MOV";
 
 // =====================================================
 // MEDIA LIBRARY
+// Images and videos alternate.
+// No two videos appear next to one another.
 // =====================================================
 
 const media = [
-  { src: hero, type: "image", label: "Sierra Oaks" },
-  { src: photo1, type: "image", label: "Learning & discovery" },
-  { src: movie2, type: "video", label: "Movement & discipline" },
-  { src: photo3, type: "image", label: "Exploration" },
-  { src: photo4, type: "image", label: "Creative practice" },
-  { src: photo5, type: "image", label: "Learning in practice" },
-  { src: photo6, type: "image", label: "Everyday discoveries" },
-  { src: movie7, type: "video", label: "Skating practice" },
-  { src: photo8, type: "image", label: "Experiential learning" },
-  { src: movie9, type: "video", label: "Artistry in motion" },
-  { src: photo10, type: "image", label: "Curiosity" },
-  { src: movie10, type: "video", label: "Practice & perseverance" },
-  { src: movie11, type: "video", label: "The learning journey" },
+  {
+    src: photo1,
+    type: "image",
+    label: "Learning and discovery",
+  },
+  {
+    src: movie2,
+    type: "video",
+    label: "Movement and discipline",
+  },
+  {
+    src: photo3,
+    type: "image",
+    label: "Exploration",
+  },
+  {
+    src: movie7,
+    type: "video",
+    label: "Skating practice",
+  },
+  {
+    src: photo4,
+    type: "image",
+    label: "Creative practice",
+  },
+  {
+    src: movie9,
+    type: "video",
+    label: "Artistry in motion",
+  },
+  {
+    src: photo5,
+    type: "image",
+    label: "Learning in practice",
+  },
+  {
+    src: movie10,
+    type: "video",
+    label: "Practice and perseverance",
+  },
+  {
+    src: photo6,
+    type: "image",
+    label: "Everyday discoveries",
+  },
+  {
+    src: movie11,
+    type: "video",
+    label: "The learning journey",
+  },
+  {
+    src: photo8,
+    type: "image",
+    label: "Experiential learning",
+  },
+  {
+    src: photo10,
+    type: "image",
+    label: "Curiosity",
+  },
 ];
 
 // =====================================================
@@ -56,29 +103,78 @@ const scenes = [
       "A school shaped by curiosity, grounded in purpose.",
   },
   {
-    mediaIndex: 2,
+    mediaIndex: 1,
     label: "02 / DISCIPLINE",
     title: "Progress at your own pace.",
     description:
       "Time to master what challenges us. Room to advance where we thrive.",
   },
   {
-    mediaIndex: 4,
+    mediaIndex: 2,
     label: "03 / DISCOVERY",
     title: "Follow the questions.",
     description:
       "An education that makes room for interests, imagination, and inquiry.",
   },
   {
-    mediaIndex: 9,
-    label: "04 / EXPRESSION",
+    mediaIndex: 3,
+    label: "04 / MOVEMENT",
     title: "Learning in motion.",
     description:
-      "Where artistic expression, physical discipline, and academic curiosity meet.",
+      "Where physical discipline and artistic expression meet.",
   },
   {
-    mediaIndex: 12,
-    label: "05 / POSSIBILITY",
+    mediaIndex: 4,
+    label: "05 / CREATIVITY",
+    title: "The freedom to explore.",
+    description:
+      "Creative pursuits invite new ways of thinking.",
+  },
+  {
+    mediaIndex: 5,
+    label: "06 / EXPRESSION",
+    title: "Artistry in motion.",
+    description:
+      "Learning through movement, practice, and expression.",
+  },
+  {
+    mediaIndex: 6,
+    label: "07 / EXPLORATION",
+    title: "Discover something new.",
+    description:
+      "Everyday experiences become opportunities for learning.",
+  },
+  {
+    mediaIndex: 7,
+    label: "08 / PERSEVERANCE",
+    title: "The value of practice.",
+    description:
+      "Confidence grows through dedication and discovery.",
+  },
+  {
+    mediaIndex: 8,
+    label: "09 / WONDER",
+    title: "A world worth exploring.",
+    description:
+      "Curiosity connects learning to the world around us.",
+  },
+  {
+    mediaIndex: 9,
+    label: "10 / POSSIBILITY",
+    title: "Always becoming.",
+    description:
+      "Learning is a journey shaped by experience.",
+  },
+  {
+    mediaIndex: 10,
+    label: "11 / EXPERIENCE",
+    title: "Beyond the classroom.",
+    description:
+      "Meaningful learning happens wherever curiosity leads.",
+  },
+  {
+    mediaIndex: 11,
+    label: "12 / CURIOSITY",
     title: "Curiosity over convention.",
     description:
       "An individualized education grounded in meaningful discovery.",
@@ -86,14 +182,13 @@ const scenes = [
 ];
 
 // =====================================================
-// SHARED MEDIA COMPONENT
+// SHARED FILM MEDIA COMPONENT
 // =====================================================
 
 function FilmMedia({
   item,
   className = "",
   autoPlay = true,
-  controls = false,
 }) {
   if (!item) return null;
 
@@ -106,34 +201,66 @@ function FilmMedia({
           muted
           loop
           playsInline
-          controls={controls}
           preload="metadata"
         />
       ) : (
-        <img src={item.src} alt={item.label} loading="lazy" />
+        <img
+          src={item.src}
+          alt={item.label}
+          loading="eager"
+        />
       )}
-      <div className="film-grain" aria-hidden="true" />
+
+      <div
+        className="film-grain"
+        aria-hidden="true"
+      />
     </div>
   );
 }
 
-// =====================================================
-// HERO
-// =====================================================
 
 function CinematicHero() {
   const [activeScene, setActiveScene] = useState(0);
+  const [sliding, setSliding] = useState(false);
+  const slidingRef = useRef(false);
+
+  const SLIDE_DURATION = 1100;
+  const SCENE_DURATION = 7500;
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveScene((current) => (current + 1) % scenes.length);
-    }, 7500);
+    const timer = window.setTimeout(() => {
+      slidingRef.current = true;
+      setSliding(true);
+    }, SCENE_DURATION);
 
-    return () => window.clearInterval(interval);
-  }, []);
+    return () => window.clearTimeout(timer);
+  }, [activeScene]);
+
+  useEffect(() => {
+    if (!sliding) return;
+
+    const timer = window.setTimeout(() => {
+      setActiveScene(
+        (current) => (current + 1) % scenes.length
+      );
+      slidingRef.current = false;
+      setSliding(false);
+    }, SLIDE_DURATION);
+
+    return () => window.clearTimeout(timer);
+  }, [sliding]);
+
+  const nextIndex = (activeScene + 1) % scenes.length;
+  const afterNextIndex = (activeScene + 2) % scenes.length;
 
   const scene = scenes[activeScene];
-  const nextScene = scenes[(activeScene + 1) % scenes.length];
+
+  const advanceTo = (index) => {
+    if (slidingRef.current) return;
+    setActiveScene(index);
+    setSliding(false);
+  };
 
   return (
     <>
@@ -143,21 +270,58 @@ function CinematicHero() {
         </div>
       </header>
 
-      <section className="hero" aria-label="Sierra Oaks film sequence">
-        <div className="hero-stage" key={activeScene}>
-          <FilmMedia
-            item={media[scene.mediaIndex]}
-            className="hero-panel hero-panel--main"
-          />
-
-          <FilmMedia
-            item={media[nextScene.mediaIndex]}
-            className="hero-panel hero-panel--preview"
-          />
+      <section
+        className="hero"
+        aria-label="Sierra Oaks film sequence"
+      >
+        <div
+          className="hero-stage"
+          style={{
+            display: "block",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            className="hero-filmstrip"
+            style={{
+              display: "flex",
+              width: "175%",
+              height: "100%",
+              gap: "0.7%",
+              transform: sliding
+                ? "translateX(-42.86%)"
+                : "translateX(0)",
+              transition: sliding
+                ? `transform ${SLIDE_DURATION}ms cubic-bezier(0.76, 0, 0.24, 1)`
+                : "none",
+              willChange: "transform",
+            }}
+          >
+            {[activeScene, nextIndex, afterNextIndex].map(
+              (index) => (
+                <div
+                  key={index}
+                  style={{
+                    flex: "0 0 42.3%",
+                    minWidth: 0,
+                    height: "100%",
+                    overflow: "hidden",
+                    borderRadius: "9px",
+                  }}
+                >
+                  <FilmMedia
+                    item={media[scenes[index].mediaIndex]}
+                    className="hero-panel"
+                  />
+                </div>
+              )
+            )}
+          </div>
         </div>
 
         <div className="hero-caption">
-          <div className="scene-copy" key={activeScene}>
+          <div className="scene-copy">
             <div className="scene-number">
               {scene.label}
             </div>
@@ -171,17 +335,21 @@ function CinematicHero() {
             </p>
           </div>
 
-          <div className="scene-progress" aria-label="Film scenes">
+          <div
+            className="scene-progress"
+            aria-label="Film scenes"
+          >
             {scenes.map((item, index) => (
               <button
                 key={item.label}
                 type="button"
                 className={`scene-progress-item ${
-                  index === activeScene ? "is-active" : ""
+                  index === activeScene
+                    ? "is-active"
+                    : ""
                 }`}
                 aria-label={`Show scene ${index + 1}`}
-                aria-current={index === activeScene ? "step" : undefined}
-                onClick={() => setActiveScene(index)}
+                onClick={() => advanceTo(index)}
               />
             ))}
           </div>
@@ -190,6 +358,7 @@ function CinematicHero() {
     </>
   );
 }
+
 
 // =====================================================
 // EDUCATIONAL PHILOSOPHY
@@ -209,28 +378,33 @@ function Philosophy() {
 
         <div className="section-text">
           <p>
-            At Sierra Oaks Preparatory, education begins with
-            curiosity. We believe meaningful learning happens
-            when strong academic foundations meet the freedom
-            to explore individual interests, develop new
-            skills, and pursue questions worth asking.
+            At Sierra Oaks Preparatory, education
+            begins with curiosity. We believe
+            meaningful learning happens when
+            strong academic foundations meet
+            the freedom to explore individual
+            interests, develop new skills, and
+            pursue questions worth asking.
           </p>
 
           <p>
-            Our individualized approach allows students to
-            progress according to their understanding rather
-            than a predetermined pace. We take the time
-            necessary to build confidence where challenges
-            arise, while encouraging advancement wherever
+            Our individualized approach allows
+            students to progress according to
+            their understanding rather than a
+            predetermined pace. We take the
+            time necessary to build confidence
+            where challenges arise, while
+            encouraging advancement wherever
             readiness and ability allow.
           </p>
 
           <p>
-            Consistent instruction in mathematics and language
-            arts provides a foundation for a broader education
-            shaped by discovery, creative expression, physical
-            discipline, cultural understanding, and hands-on
-            experience.
+            Consistent instruction in mathematics
+            and language arts provides a foundation
+            for a broader education shaped by
+            discovery, creative expression,
+            physical discipline, cultural
+            understanding, and hands-on experience.
           </p>
         </div>
       </div>
@@ -283,7 +457,10 @@ function EducationalApproach() {
 
         <div className="pillars">
           {pillars.map((pillar) => (
-            <article className="pillar" key={pillar.number}>
+            <article
+              className="pillar"
+              key={pillar.number}
+            >
               <div className="pillar-number">
                 {pillar.number}
               </div>
@@ -321,17 +498,18 @@ function EducationalLeadership() {
 
         <div className="section-text">
           <p>
-            Our educational approach draws upon backgrounds
-            in behavioral sciences, philosophy, technology,
-            fine arts, and history, alongside bilingual
+            Our educational approach draws upon
+            backgrounds in behavioral sciences,
+            philosophy, technology, fine arts,
+            and history, alongside bilingual
             instruction and cultural learning.
           </p>
 
           <p>
-            Together, these perspectives support an
-            interdisciplinary environment where analytical
-            thinking, creativity, and independent inquiry
-            are encouraged.
+            Together, these perspectives support
+            an interdisciplinary environment
+            where analytical thinking, creativity,
+            and independent inquiry are encouraged.
           </p>
         </div>
       </div>
@@ -340,7 +518,8 @@ function EducationalLeadership() {
 }
 
 // =====================================================
-// MIXED PHOTO / VIDEO GALLERY
+// BOTTOM PHOTO / VIDEO CAROUSEL
+// No heading, description, or play indicators.
 // =====================================================
 
 function SchoolGallery() {
@@ -355,19 +534,28 @@ function SchoolGallery() {
       const gallery = galleryRef.current;
 
       if (gallery && directionRef.current !== 0) {
-        const elapsed = lastTime ? Math.min(time - lastTime, 50) : 16;
-        gallery.scrollLeft += directionRef.current * elapsed * 0.35;
+        const elapsed = lastTime
+          ? Math.min(time - lastTime, 50)
+          : 16;
+
+        gallery.scrollLeft +=
+          directionRef.current * elapsed * 0.35;
       }
 
       lastTime = time;
-      frameRef.current = window.requestAnimationFrame(animate);
+
+      frameRef.current =
+        window.requestAnimationFrame(animate);
     };
 
-    frameRef.current = window.requestAnimationFrame(animate);
+    frameRef.current =
+      window.requestAnimationFrame(animate);
 
     return () => {
       if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
+        window.cancelAnimationFrame(
+          frameRef.current
+        );
       }
     };
   }, []);
@@ -378,8 +566,12 @@ function SchoolGallery() {
       return;
     }
 
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const relativeX = (event.clientX - bounds.left) / bounds.width;
+    const bounds =
+      event.currentTarget.getBoundingClientRect();
+
+    const relativeX =
+      (event.clientX - bounds.left) /
+      bounds.width;
 
     if (relativeX < 0.18) {
       directionRef.current = -1;
@@ -391,23 +583,10 @@ function SchoolGallery() {
   };
 
   return (
-    <section className="gallery-section">
-      <div className="gallery-heading">
-        <div className="section-label">
-          Life at Sierra Oaks
-        </div>
-
-        <h2 className="section-heading">
-          Learning in practice.
-        </h2>
-
-        <p className="section-text">
-          A collection of moments from the experiences,
-          explorations, and creative pursuits that shape
-          our days.
-        </p>
-      </div>
-
+    <section
+      className="gallery-section"
+      aria-label="Sierra Oaks photo and film gallery"
+    >
       <div
         className="gallery-viewport"
         onPointerMove={updateDirection}
@@ -415,46 +594,50 @@ function SchoolGallery() {
           directionRef.current = 0;
         }}
       >
-        <div className="gallery-track" ref={galleryRef}>
+        <div
+          className="gallery-track"
+          ref={galleryRef}
+        >
           {media.map((item, index) => (
             <div
               className="gallery-item film-frame"
               key={`${item.src}-${index}`}
               style={{
                 "--media-ratio":
-                  item.type === "video" ? "3 / 4" : "4 / 5",
+                  item.type === "video"
+                    ? "3 / 4"
+                    : "4 / 5",
               }}
             >
               {item.type === "video" ? (
-                <>
-                  <video
-                    src={item.src}
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    onMouseEnter={(event) => {
-                      event.currentTarget.play().catch(() => {});
-                    }}
-                    onMouseLeave={(event) => {
-                      event.currentTarget.pause();
-                    }}
-                    onClick={(event) => {
-                      const video = event.currentTarget;
+                <video
+                  src={item.src}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  onMouseEnter={(event) => {
+                    event.currentTarget
+                      .play()
+                      .catch(() => {});
+                  }}
+                  onMouseLeave={(event) => {
+                    event.currentTarget.pause();
+                  }}
+                  onClick={(event) => {
+                    const video =
+                      event.currentTarget;
 
-                      if (video.paused) {
-                        video.play().catch(() => {});
-                      } else {
-                        video.pause();
-                      }
-                    }}
-                    aria-label={item.label}
-                  />
-
-                  <div className="video-indicator">
-                    ▶ FILM
-                  </div>
-                </>
+                    if (video.paused) {
+                      video
+                        .play()
+                        .catch(() => {});
+                    } else {
+                      video.pause();
+                    }
+                  }}
+                  aria-label={item.label}
+                />
               ) : (
                 <img
                   src={item.src}
@@ -463,7 +646,10 @@ function SchoolGallery() {
                 />
               )}
 
-              <div className="film-grain" aria-hidden="true" />
+              <div
+                className="film-grain"
+                aria-hidden="true"
+              />
             </div>
           ))}
         </div>
@@ -489,12 +675,14 @@ function WebsiteInWaiting() {
         </h2>
 
         <p className="waiting-text">
-          In keeping with our interest-led approach to
-          education, we have chosen to keep our digital
-          presence intentionally simple. When student
+          In keeping with our interest-led
+          approach to education, we have
+          chosen to keep our digital presence
+          intentionally simple. When student
           curiosity turns toward web development,
-          programming, and digital design, we look forward
-          to making the development of this website part
+          programming, and digital design,
+          we look forward to making the
+          development of this website part
           of the learning experience itself.
         </p>
 
